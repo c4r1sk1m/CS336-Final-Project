@@ -14,7 +14,7 @@ application.secret_key = "Secret"
 application.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Combat0208!@cs336-spring2018.cxaikb3deay0.us-east-2.rds.amazonaws.com/FinalProject'
 db = SQLAlchemy(application)
 application.debug = True
-
+##############################This section sets up all the tables in Python so that the RDB can be Queried#######################################
 class User(db.Model):
     id = db.Column(db.Integer, unique=True,autoincrement=True, primary_key=True)
     username = db.Column(db.String(64), unique=True, primary_key=True)
@@ -27,7 +27,96 @@ class User(db.Model):
         self.password_hash = pbkdf2_sha256.hash(password)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)  
+        return '<User {}>'.format(self.username)
+
+class Users(db.Model):
+	idusers       = db.Column(db.Integer, unique=True,autoincrement=True, primary_key=True)
+	username      = db.Column(db.String(45), unique=True)
+	password      = db.Column(db.String(45), unique=True)
+	first_name    = db.Column(db.String(45), unique=True)
+	last_name     = db.Column(db.String(45), unique=True)
+	email_address = db.Column(db.String(45), unique=True)
+	def __init__(self,username,password,first_name,last_name,email_address):
+		self.username 	   = username
+		self.passowrd	   = pbkdf2_sha256.hash(password)
+		self.first_name	   = first_name
+		self.last_name 	   = last_name
+		self.email_address = email_address
+	def __repr__(self):
+		return '<Users{}>'.format(self.username)
+
+
+class Bookmarks(db.Model):
+	bookmark_id = db.Column(db.Integer,primary_key=True)
+	home 		= db.Column(db.Integer)
+	user        = db.Column(db.Integer)
+	def __init__(bookmark_id,home,user):
+		self.bookmark_id=bookmark_id
+		self.home=home
+		self.user=user
+	def __repr__(self):
+		return '<Bookmarks{}>'.format(self.bookmark_id)
+
+
+class Features(db.Model):
+	entryid 	 = db.Column(db.Integer,primary_key=True)
+	house 		 = db.Column(db.Integer)
+	feature_type = db.Column(db.String(30))
+	def __init__(entryid,house,feature_type):
+		self.entryid=entryid
+		self.house=house
+		self.feature_type=feature_type
+	def __repr__(self):
+		return '<Features{}>'.format(self.entryid)
+
+
+class Home(db.Model):
+	hid				= db.Column(db.Integer,primary_key=True)
+	address 		= db.Column(db.String(40))
+	home_type		= db.Column(db.String(40))
+	acres			= db.Column(db.Integer)
+	construct_date	= db.Column(db.String(10))
+	cost 			= db.Column(db.Double)
+	seller 			= db.Column(db.Integer)
+	def __init__(hid,address,home_type,acres,construct_date,cost,seller):
+		self.hid 			= hid
+		self.address     	= address
+		self.home_type 		= home_type
+		self.acres 			= acres
+		self.construct_date = construct_date
+		self.cost 			= cost
+		self.seller 		= seller
+	def __repr__(self):
+		return '<Home{}>'.format(self.hid)
+
+
+
+
+class Room(db.Model):
+	house
+	room_type
+	amount
+	entryid
+
+
+class Seller(db.Model):
+	seller_id
+	phone_num
+	email
+	seller_fname
+	seller_lname
+
+
+class Utilities(db.Model):
+	entryid
+	house
+	util_type
+
+##################################################################################################################################################
+
+
+
+
 
 
  
