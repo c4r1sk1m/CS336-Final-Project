@@ -43,7 +43,7 @@ class Users(db.Model):
 		self.last_name 	   = last_name
 		self.email_address = email_address
 	def __repr__(self):
-		return '<Users{}>'.format(self.username)
+		return '<Users {}>'.format(self.username)
 
 
 class Bookmarks(db.Model):
@@ -55,7 +55,7 @@ class Bookmarks(db.Model):
 		self.home=home
 		self.user=user
 	def __repr__(self):
-		return '<Bookmarks{}>'.format(self.bookmark_id)
+		return '<Bookmarks {}>'.format(self.bookmark_id)
 
 
 class Features(db.Model):
@@ -67,7 +67,7 @@ class Features(db.Model):
 		self.house=house
 		self.feature_type=feature_type
 	def __repr__(self):
-		return '<Features{}>'.format(self.entryid)
+		return '<Features {}>'.format(self.entryid)
 
 
 class Home(db.Model):
@@ -76,7 +76,7 @@ class Home(db.Model):
 	home_type		= db.Column(db.String(40))
 	acres			= db.Column(db.Integer)
 	construct_date	= db.Column(db.String(10))
-	cost 			= db.Column(db.Double)
+	cost 			= db.Column(db.Float)
 	seller 			= db.Column(db.Integer)
 	def __init__(hid,address,home_type,acres,construct_date,cost,seller):
 		self.hid 			= hid
@@ -87,45 +87,63 @@ class Home(db.Model):
 		self.cost 			= cost
 		self.seller 		= seller
 	def __repr__(self):
-		return '<Home{}>'.format(self.hid)
-
-
+		return '<Home {}>'.format(self.hid)
 
 
 class Room(db.Model):
-	house
-	room_type
-	amount
-	entryid
-
+	house		 = db.Column(db.Integer)
+	room_type	 = db.Column(db.String(15))
+	amount 		 = db.Column(db.Integer)
+	entryid		 = db.Column(db.Integer,primary_key=True)
+	def __init__(house,room_type,amount,entryid):
+		self.house		 = house
+		self.room_type	 = room_type
+		self.amount		 = amount
+		self.entryid	 = entryid
+	def __repr__(self):
+		return '<Room {}>'.format(self.entryid)
 
 class Seller(db.Model):
-	seller_id
-	phone_num
-	email
-	seller_fname
-	seller_lname
+	seller_id		= db.Column(db.Integer,primary_key=True)
+	phone_num		= db.Column(db.String(12))
+	email 			= db.Column(db.String(70))
+	seller_fname	= db.Column(db.String(30))
+	seller_lname 	= db.Column(db.String(30))
+	def __init__(seller_id,phone_num,email,seller_fname,seller_lname):
+		self.seller_id 		= seller_id
+		self.phone_num 		= phone_num
+		self.email 			= email
+		self.seller_fname 	= seller_fname
+		self.seller_lname 	= seller_lname
+	def __repr__(self):
+		return '<Seller {}>'.format(self.seller_id)
 
 
 class Utilities(db.Model):
-	entryid
-	house
-	util_type
-
-##################################################################################################################################################
-
-
-
-
-
-
+	entryid 	= db.Column(db.Integer,primary_key=True)
+	house 		= db.Column(db.Integer)
+	util_type	= db.Column(db.String(15))
+	def __init__(entryid,house,util_type):
+		self.entryid 	= entryid
+		self.house 		= house
+		self.util_type  = util_type
+	def __repr__(self):
+		return '<Utilities {}>'.format(self.entryid)
+#################################################################This controls the website routing#################################################################################
  
 @application.route("/")
 def home():
     if not session.get('logged_in'):
-        return render_template('loginpage.html')
+        return render_template('buy.html')
     else:
-        return "Hello Boss!  <a href='/logout'>Logout</a>"
+    	return render_template('properties.html')
+
+
+
+
+@application.route('/signin')
+def signIn():
+	return render_template('loginpage.html')    	
                    
  
 @application.route('/login', methods=['POST'])
@@ -145,7 +163,7 @@ def do_admin_login():
                 flash('Invalid username or password. Please try again!')
         except TypeError:            
             flash('Invalid username or password. Please try again!')
-    return home()
+    return render_template('loginpage.html')
 
 @application.route("/signup")
 def display():
@@ -170,14 +188,38 @@ def sign_up():
         flash('User Already Exists. Login to Continue')
     return render_template('add_user.html')
  
+
 @application.route("/logout")
 def logout():
     session['logged_in'] = False
     return home()          
 
 
+@application.route("/rent")
+def rent():
+	return render_template('rent.html')
 
+
+@application.route("/buy")
+def buy():
+	return render_template('buy.html')
+
+
+@application.route("/properties")
+def properties():
+	return render_template('properties.html')
  
+
+@application.route("/devtest")
+def devtest():
+	return render_template('devtest.html')
+
+@application.route("/search")
+def search():
+	return render_template('search.html')
+ 
+
+
 if __name__ == "__main__":    
     application.config['SESSION_TYPE'] = 'filesystem'
     # db.create_all()
