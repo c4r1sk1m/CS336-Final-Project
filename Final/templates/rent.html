@@ -76,11 +76,14 @@
 							<li class="active"><a href="/rent">Rent</a></li>
 							<li><a href="/properties">Properties</a></li>
 						    {% if session['logged_in'] == True %}
-						      <li class="cta"><a href="/search">Search</a></li>
+						    	 {% if session['seller'] == True %}
+						    	 	<li class="cta"><a href="/search">My Bookmarks</a></li>
+						    	 {% else %}
+						    	 	<li class="cta"><a href="/search">My Homes</a></li>
+						    	 {% endif %}						      
 						      <li class="cta"><a href="/logout">Logout</a></li>
-
 						    {% else %}
-						      <li class="cta"><a href="/signin">Login</a></li>
+						      <li class="cta"><a href="/signin">Log In</a></li>
 						    {% endif %}
 						</ul>
 					</nav>

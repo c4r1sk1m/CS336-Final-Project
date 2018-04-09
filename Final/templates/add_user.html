@@ -76,12 +76,15 @@
 							<li class="active"><a href="/rent">Rent</a></li>
 							<li><a href="/properties">Properties</a></li>
 						    {% if session['logged_in'] == True %}
-						      <li class="cta"><a href="/search">Search</a></li>
+						    	 {% if session['seller'] == True %}
+						    	 	<li class="cta"><a href="/search">My Bookmarks</a></li>
+						    	 {% else %}
+						    	 	<li class="cta"><a href="/search">My Homes</a></li>
+						    	 {% endif %}						      
 						      <li class="cta"><a href="/logout">Logout</a></li>
 						    {% else %}
 						      <li class="cta"><a href="/signin">Log In</a></li>
 						    {% endif %}
-
 						</ul>
 					</nav>
 				</div>
@@ -124,16 +127,42 @@
 					<div class="login-form">
 					<div class="control-group">
 						<label>Username:</label>
-						<input type="text" autocomplete="new-password" class="login-field" value="" placeholder="username" name="username">
+						<input type="text" autocomplete="new-password" class="login-field" value="" placeholder="Username" name="username">
 					</div>
+
+					<div class="control-group">
+						<label>First Name:</label>
+						<input type="text" autocomplete="new-password" class="login-field" value="" placeholder="First Name" name="fName">
+					</div>
+
+
+					<div class="control-group">
+						<label>Last Name:</label>
+						<input type="text" autocomplete="new-password" class="login-field" value="" placeholder="Last Name" name="lName">
+					</div>
+
+
 					<div class="control-group">
 						<label>Password:</label>
-						<input type="password" autocomplete="new-password" class="login-field" value="" placeholder="password" name="password">
+						<input type="password" class="login-field" value="" placeholder="password" name="password">
 					</div>
 					<div class="control-group">
 						<label>Email:</label>
 						<input type="text" autocomplete="new-password" class="login-field" value="" placeholder="email" name="email">
-					</div>		
+					</div>
+
+					<div class="control-group">
+						<label>Phone Number:</label>
+						<input type="text" autocomplete="new-password" class="login-field" value="" placeholder="Phone Number" name="pnumber">
+					</div>
+					<div class="control-group">
+						<label>I am a seller:</label>
+						<input type="checkbox" autocomplete="new-password" class="login-field" value="" name="seller">
+					</div>
+
+
+
+
 						<input type="submit" autocomplete="new-password" value="Sign Up" class = "btn btn-primary btn-large btn-block" />
 					</div>
 				</div>
