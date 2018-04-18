@@ -6,6 +6,7 @@ from passlib.hash import pbkdf2_sha256
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import text
 
 import os
 
@@ -213,7 +214,7 @@ def properties():
 @application.route("/add_property")
 def addProp():
 	allProperties = Home.query.all()
-
+	return 
  
 
 @application.route("/devtest")
@@ -221,10 +222,23 @@ def devtest():
 	return render_template('devtest.html')
 
 @application.route("/search")
-def search():
-	return render_template('search.html')
- 
+def search():	
+	sql_1 = text('select distinct hid from (select * from Home where cost < 100000 and acres >= 4 and construct_date >= 0) as t0 join Room where house = hid and hid in (select hid from (select *, count(room_type) as num_of_rooms from (select * from Home join Room where house = hid) as t2 group by address) as t3 where num_of_rooms >= 4);')
+	sql_2 = text('select seller, user from (select * from Home join Seller where seller_id = seller) as t0 join Bookmarks where home = hid;')
+	x = "'%NJ%'"
+	sql_3 = text('select user, address from (select * from Home join Bookmarks  where hid = home) as t0 where address Like'+x)
+	sql_4 = text('select seller_fname, seller_lname, phone_num, email, address  from (select * from (select * from Features where feature_type = '+"'Pool'"+') as t0 join Home where house = hid) as t1 join Seller where seller = seller_id; ')
+	result_1 = db.engine.execute(sql_1)
+	result_2 = db.engine.execute(sql_2) 	
+	result_3 = db.engine.execute(sql_3)
+	result_4 = db.engine.execute(sql_4)
 
+	names = []
+	for row in result_1:
+		names.append(row)
+		print row
+	print names
+	return render_template('search.html')
 
 if __name__ == "__main__":    
     application.config['SESSION_TYPE'] = 'filesystem'
