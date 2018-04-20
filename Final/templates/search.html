@@ -44,15 +44,15 @@
   <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'> -->
   
   <!-- Animate.css -->
-  <link rel="stylesheet" href="static/css/animate.css">
+  <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename='css/animate.css')}}">
   <!-- Icomoon Icon Fonts-->
-  <link rel="stylesheet" href="static/css/icomoon.css">
+  <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename='css/icomoon.css')}}">
   <!-- Bootstrap  -->
-  <link rel="stylesheet" href="static/css/bootstrap.css">
+  <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename='css/bootstrap.css')}}">
   <!-- Flexslider  -->
-  <link rel="stylesheet" href="static/css/flexslider.css">
+  <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename='css/flexslider.css')}}">
   <!-- Theme style  -->
-  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" type = "text/css" href="{{ url_for('static',filename='css/style.css')}}">
 
   <!-- Modernizr JS -->
   <script src="static/js/modernizr-2.6.2.min.js"></script>
@@ -60,11 +60,6 @@
   <!--[if lt IE 9]>
   <script src="js/respond.min.js"></script>
   <![endif]-->
-
-
-  <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
   </head>
   <body>
@@ -80,17 +75,18 @@
               <li><a href="/buy">Buy</a></li>
               <li class="active"><a href="/rent">Rent</a></li>
               <li><a href="/properties">Properties</a></li>
-                {% if session['logged_in'] == True %}
-                   {% if session['seller'] == True %}
-                    <li class="cta"><a href="/search">My Bookmarks</a></li>
-                   {% else %}
-                    <li class="cta"><a href="/search">My Homes</a></li>
-                   {% endif %}
-                   <li class="cta"><a href="/settings">Profile</a></li>                  
-                  <li class="cta"><a href="/logout">Logout</a></li>
-                {% else %}
-                  <li class="cta"><a href="/signin">Log In</a></li>
-                {% endif %}
+                        {% if session['logged_in'] == True %}
+                      <li><a href="/add_property">Add Properties</a></li>
+                         {% if session['seller'] == True %}
+                          <li class="cta"><a href="/myhomes">My Bookmarks</a></li>
+                         {% else %}
+                          <li class="cta"><a href="/myhomes">My Bookmarks</a></li>
+                         {% endif %}
+                         <li class="cta"><a href="/settings">Profile</a></li>                  
+                        <li class="cta"><a href="/logout">Logout</a></li>
+                      {% else %}
+                        <li class="cta"><a href="/signin">Log In</a></li>
+                      {% endif %}
             </ul>
           </nav>
         </div>
@@ -98,22 +94,67 @@
     </div>
   </header>
 
+  <div class="fh5co-page-title" style="background-image: url(images/slide_6.jpg);">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 animate-box">
+          <h1><span class="colored">Bookmarks</span></h1>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
+  <div class="container" style="min-height:100% width:80%">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      {{message}}     
+      </div>
+    {% endfor %}
+    {% endif %}
+  {% endwith %}
 
+  <div id="Bookmarks">
+        <div class="col-md-4 item-block animate-box" data-animate-effect="fadeIn">
+          <div class="fh5co-property">
+            <br>
+            <br>
+            {% for allBookmarks,roomCount in allBookmarked_rooms %}
+            <figure>
+              <h4>{{allBookmarks.home_type}}</h4>
+              <a href="/contact/{{allBookmarks.hid}}" class="tag">Interested? Click me.</a>
+            </figure>
+            <div class="fh5co-property-innter">
+              <h3><a href="#">{{allBookmarks.address}}</a></h3>
+              <div class="price-status">
+                      <span class="price">${{allBookmarks.cost}} </span>
+                   </div>
+                </div>
+                <p class="fh5co-property-specification">
+                  <span><strong>Year:</strong> {{allBookmarks.construct_date}}</span><span><strong>{{allBookmarks.acres}}</strong> Acres</span>  <span><strong>{{roomCount}}</strong> Rooms</span> 
+                </p>
+            {% endfor %}
+          </div>
+  </div>
+
+  
 
   
 
 
 
   
-  <footer id="fh5co-footer" role="contentinfo">  
+  <footer id="fh5co-footer" role="contentinfo">
+  
     <div class="container">
       <div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-        <h3>About Us</h3>
-        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-        <p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">I'm button <i class="icon-arrow-right"></i></a></p>
-      </div>    
+        <p>Thank you for choosing us. </p>
+      </div>
+    
     </div>
   </footer>
   </div>

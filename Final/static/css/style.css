@@ -1676,4 +1676,12 @@ h1, h2, h3, h4, h5, h6, figure {
   opacity: 0;
 }
 
+#myInput {
+	background-image: url('/css/searchicon.png');
+	background-repeat: no-repeat;
+	width: 100%
+	font-size: 16px;
+	border: 1px solid #ddd
+	margin-bottom: 12px
+}
 /*# sourceMappingURL=style.css.map */

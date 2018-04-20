@@ -75,17 +75,18 @@
 							<li><a href="/buy">Buy</a></li>
 							<li class="active"><a href="/rent">Rent</a></li>
 							<li><a href="/properties">Properties</a></li>
-						    {% if session['logged_in'] == True %}
-						    	 {% if session['seller'] == True %}
-						    	 	<li class="cta"><a href="/search">My Bookmarks</a></li>
-						    	 {% else %}
-						    	 	<li class="cta"><a href="/search">My Homes</a></li>
-						    	 {% endif %}
-						    	 <li class="cta"><a href="/settings">Profile</a></li>						      
-						      <li class="cta"><a href="/logout">Logout</a></li>
-						    {% else %}
-						      <li class="cta"><a href="/signin">Log In</a></li>
-						    {% endif %}
+              				  {% if session['logged_in'] == True %}
+			                <li><a href="/add_property">Add Properties</a></li>
+			                   {% if session['seller'] == True %}
+			                    <li class="cta"><a href="/myhomes">My Bookmarks</a></li>
+			                   {% else %}
+			                    <li class="cta"><a href="/myhomes">My Bookmarks</a></li>
+			                   {% endif %}
+			                   <li class="cta"><a href="/settings">Profile</a></li>                  
+			                  <li class="cta"><a href="/logout">Logout</a></li>
+			                {% else %}
+			                  <li class="cta"><a href="/signin">Log In</a></li>
+			                {% endif %}
 						</ul>
 					</nav>
 				</div>

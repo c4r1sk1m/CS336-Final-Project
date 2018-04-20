@@ -76,18 +76,18 @@
 							<li><a href="/buy">Buy</a></li>
 							<li><a href="/rent">Rent</a></li>
 							<li class="active"><a href="/properties">Properties</a></li>							
-						    {% if session['logged_in'] == True %}
-						    	 {% if session['seller'] == True %}
-						    	 	<li class="cta"><a href="/search">My Bookmarks</a></li>
-						    	 {% else %}
-						    	 	<li class="cta"><a href="/search">My Homes</a></li>
-						    	 {% endif %}				
-						    	<li class="cta"><a href="/settings">Profile</a></li> 		      
-						      <li class="cta"><a href="/logout">Logout</a></li>
-
-						    {% else %}
-						      <li class="cta"><a href="/signin">Log In</a></li>
-						    {% endif %}
+              				  {% if session['logged_in'] == True %}
+			                <li><a href="/add_property">Add Properties</a></li>
+			                   {% if session['seller'] == True %}
+			                    <li class="cta"><a href="/myhomes">My Bookmarks</a></li>
+			                   {% else %}
+			                    <li class="cta"><a href="/myhomes">My Bookmarks</a></li>
+			                   {% endif %}
+			                   <li class="cta"><a href="/settings">Profile</a></li>                  
+			                  <li class="cta"><a href="/logout">Logout</a></li>
+			                {% else %}
+			                  <li class="cta"><a href="/signin">Log In</a></li>
+			                {% endif %}
 						</ul>
 					</nav>
 				</div>
@@ -107,63 +107,48 @@
 	</div>
 
 
+	<div class="fh5co-page-title" style="background-image: url(images/slide_6.jpg);">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 animate-box">
+				<h1><span class="colored">Filter</span> By</h1>
+					<li class="cta"><a href="/year">year</a></li>
+					<li class="cta"><a href="/acres">acres</a></li>
+					<li class="cta"><a href="/cost">price</a></li>
+					<li class="cta"><a href="/house">house</a></li>
+					<li class="cta"><a href="/apartment">apartment</a></li>
+					<li class="cta"><a href="/condo">condo</a></li>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
 
 <!-- Insert List of All Homes Here -->
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-</style>
+				<div class="col-md-4 item-block animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-property">
 
 
-<table style="width:100%">
+					  {% for allBookmarks,roomCount in your_list %}
+						<figure>
+							<h4>{{allBookmarks.home_type}}</h4>
+							<a href="/contact/{{allBookmarks.hid}}" class="tag">Interested? Click me.</a>
+						</figure>
+						<div class="fh5co-property-innter">
+							<h3><a href="#">{{allBookmarks.address}}</a></h3>
+							<div class="price-status">
+		                 	<span class="price">${{allBookmarks.cost}} </span>
+		               </div>
+	            	</div>
+	            	<p class="fh5co-property-specification">
+	            		<span><strong>Year:</strong> {{allBookmarks.construct_date}}</span><span><strong>{{allBookmarks.acres}}</strong> Acres</span>  <span><strong>{{roomCount}}</strong> Rooms</span></span>
+	            	</p>
+					  {% endfor %}
+					</div>
 
-
-  {% for each in your_list %}
-      <tr>
-      <td>{{ each }}</td> 
-  	  </tr>
-  {% endfor %}
-</table>
-
-
-
-
-
-
-
-
-
-
-	
-	<footer id="fh5co-footer" role="contentinfo">
-	
-		<div class="container">
-			<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>About Us</h3>
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-				<p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">I'm button <i class="icon-arrow-right"></i></a></p>
-			</div>
-		
-		</div>
-	</footer>
-	</div>
-	
 	
 	<!-- jQuery -->
 	<script src="static/js/jquery.min.js"></script>
