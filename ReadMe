@@ -1,0 +1,8 @@
+READ ME:
+
+This program is the final project for my CS336 (Introduction to Database Management) course.
+
+Features:
+  Python/Flask based webservice
+  AWS RD used for relational database
+  Can be deployed on AWS EB using the AWS CLI
